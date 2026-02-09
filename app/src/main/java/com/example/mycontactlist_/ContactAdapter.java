@@ -12,8 +12,11 @@ import java.util.ArrayList;
 
 
 //Listing 6.2
+//Modified code in Listing 6.4
 public class ContactAdapter extends RecyclerView.Adapter {
-    private ArrayList<Contact> contactData;
+    private ArrayList<String> contactData;
+    private View.OnClickListener mOnItemClickListener;
+    // is "mOnItemClickListener" a typo?
 
     public class ContactViewHolder extends RecyclerView.ViewHolder {
 
@@ -22,15 +25,20 @@ public class ContactAdapter extends RecyclerView.Adapter {
         public ContactViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewContact = itemView.findViewById(R.id.textViewName);
+            itemView.setTag(this);
+            itemView.setOnClickListener(mOnItemClickListener);
         }
 
-        public TextView getContactTextView() {
+    public TextView getContactTextView() {
             return textViewContact;
         }
     }
     public ContactAdapter(ArrayList<String> arrayList){
 
         contactData = arrayList;
+    }
+    public void setOnItemClickListener(View.OnClickListener itemClickListener){
+        mOnItemClickListener = itemClickListener;
     }
     @NonNull
     @Override
