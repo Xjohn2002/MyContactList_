@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -103,5 +105,22 @@ public class ContactAdapter extends RecyclerView.Adapter {
             Toast.makeText(parentContext,"Delete Failed!",Toast.LENGTH_LONG).show();
         }
 
+    }
+    @Override
+    public int getItemCount(){
+        return contactData.size();
+    }
+
+    //Listing 6.15 initDeleteSwitch
+    private void  initDeleteSwitch(){
+        Switch s = findViewById(R.id.switchDelete);
+        s.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Boolean status = compoundButton.isChecked();
+                contactAdapter.setDelete(status);;
+                contactAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }
