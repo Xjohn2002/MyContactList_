@@ -1,5 +1,6 @@
 package com.example.mycontactlist_;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -30,13 +31,18 @@ public class ContactListActivity extends AppCompatActivity {
         });
         initAddContactButton();
 
+        String sortBy = getSharedPreferences("MyContactListPreferences",
+                Context.MODE_PRIVATE).getString("sortfield","contactname");
+        String sortOrder = getSharedPreferences("MyContactListPreferences",
+                Context.MODE_PRIVATE).getString("sortorder","ASC");
+
         // Listing 6.3
         //Modified for listing 6.8
         ContactDataSource ds = new ContactDataSource(this);
         ArrayList<Contact> contacts;
         try {
             ds.open();
-            contacts = ds.getContacts();
+            contacts = ds.getContacts(sortBy,sortOrder);
             ds.close();
             RecyclerView contactList = findViewById(R.id.rvContacts);
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
