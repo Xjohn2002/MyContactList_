@@ -54,6 +54,33 @@ public class ContactListActivity extends AppCompatActivity {
             Toast.makeText(this, "Error retrieving contacts", Toast.LENGTH_LONG).show();
         }
     }
+    // Listing 6.16 onResume Method ( Modified to check for contacts; Listing 6.18)
+    @Override
+    public void onResume() {
+        super.onResume();
+        String sortBy = getSharedPreferences("MyContactListPreferences",
+                Context.MODE_PRIVATE).getString("sortfield", "contactname");
+        String sortOrder = getSharedPreferences("MyContactListPreferences",
+                Context.MODE_PRIVATE).getString("sortorder", "ASC");
+        ContactDataSource ds = new ContactDataSource(this);
+        try {
+            ds.open();
+            contacts = ds.getContacts(sortBy, sortOrder);
+            ds.close();
+            if (contacts.size() > 0) {
+                RecyclerView contactList = findViewById(R.id.rvContacts);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+                contactList.setLayoutManager(layoutManager);
+                contactAdapter = new ContactAdapter(names);
+                contactList.setAdapter(contactAdapter);
+            } else {
+                Intent intent = new Intent(ContactListActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Error retrieving contacts", Toast.LENGTH_LONG).show();
+        }
+    }
 
 
     // Listing 6.12 initAddContactButton() Method
