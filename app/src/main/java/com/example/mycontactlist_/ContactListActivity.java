@@ -19,6 +19,28 @@ import java.util.ArrayList;
 
 public class ContactListActivity extends AppCompatActivity {
 
+
+    //Listing 6.5
+    //Modified for listing 6.8
+
+    private View.OnClickListener onItemClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder)
+                    view.getTag();
+            int position = viewHolder.getAdapterPosition();
+            int contactId = contacts.get(position).getContactID();
+            Intent intent = new Intent(ContactListActivity.this, MainActivity.class);
+            intent.putExtra("contactID",contactId);
+            // was "contactID" in line 110 a typo?
+            // replaced w/ "contactId"
+            startActivity(intent);
+        }
+
+    };
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,22 +116,5 @@ public class ContactListActivity extends AppCompatActivity {
         });
     }
 
-
-
-    //Listing 6.5
-    //Modified for listing 6.8
-
-        private View.OnClickListener onItemClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder)
-                    view.getTag();
-            int position = viewHolder.getAdapterPosition();
-            int contactId = contacts.get(position).getContactID();
-            Intent intent = new Intent(ContactListActivity.this, MainActivity.class);
-            intent.putExtra("contactID",contactID);
-            startActivity(intent);
-        }
-
-    };
+}
 

@@ -111,7 +111,9 @@ public class ContactDataSource {
     //Listing 6.9 Get Specific contacts Method
     public Contact getSpecificContact(int contactId){
         Contact contact = new Contact();
-        String query = "SELECT * FROM contact WHERE _id =" + contactID;
+        String query = "SELECT * FROM contact WHERE _id =" + contactId;
+        // is "contactID"  in line 114 a typo?
+        //attempted to replace w/ contactId
         Cursor cursor = database.rawQuery(query, null);
 
         if (cursor.moveToFirst()){
