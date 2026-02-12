@@ -22,7 +22,7 @@
         app:layout_constraintVertical_bias="0.072" />
 
     <TextView
-        android:id="@+id/textLatitude2"
+        android:id="@+id/textLatitude"
         android:layout_width="113dp"
         android:layout_height="35dp"
         android:layout_marginEnd="164dp"
@@ -32,15 +32,15 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tvLatitude"
         android:layout_width="84dp"
         android:layout_height="35dp"
         android:layout_marginStart="28dp"
         android:layout_marginBottom="16dp"
-        android:text="TextView"
+        android:text="Latitude"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
-        app:layout_constraintEnd_toStartOf="@+id/textLatitude2"
+        app:layout_constraintBottom_toTopOf="@+id/tvLongitude"
+        app:layout_constraintEnd_toStartOf="@+id/textLatitude"
         app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -148,7 +148,7 @@
 
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tvAccuracy"
         android:layout_width="84dp"
         android:layout_height="35dp"
         android:layout_marginStart="24dp"
@@ -160,14 +160,14 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tvLongitude"
         android:layout_width="84dp"
         android:layout_height="35dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        android:text="Longitude"
+        app:layout_constraintBottom_toTopOf="@+id/tvAccuracy"
         app:layout_constraintEnd_toStartOf="@+id/textLongitude"
         app:layout_constraintStart_toStartOf="parent" />
 
