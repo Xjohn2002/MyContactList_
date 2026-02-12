@@ -28,7 +28,8 @@ public class ContactListActivity extends AppCompatActivity {
         public void onClick(View view) {
             RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder)
                     view.getTag();
-            int position = viewHolder.getAdapterPosition();
+            int position = viewHolder.getAbsoluteAdapterPosition();
+            // replaced getAdapterPosition() w/ getAbsoluteAdapterPosition()
             int contactId = contacts.get(position).getContactID();
             Intent intent = new Intent(ContactListActivity.this, MainActivity.class);
             intent.putExtra("contactID",contactId);
