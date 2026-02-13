@@ -1,11 +1,14 @@
 package com.example.mycontactlist_;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -39,41 +43,13 @@ public class ContactMapActivity extends AppCompatActivity {
         });
     }
 
-    //Listing 7.1 Code to look up adress coords(Listing 7.3 modifed onClick Method)
+    //Listing 7.1 Code to look up adress coords(Listing 7.3 moved from onClick Method)
     private void initGetLocationButton() {
         Button locationButton = (Button) findViewById(R.id.buttonGetLocation);
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    locationManager = (LocationManager) getBaseContext().getSystemService(Context.LOCATION_SERVICE);
-                    gpsListener = new LocationListener() {
-                        public void onLocationChanged(Location location) {
-                            TextView txtLatitude = (TextView) findViewById(R.id.textLatitude);
-                            TextView txtLongitude = (TextView) findViewById(R.id.textLongitude);
-                            TextView txtAccuracy = (TextView) findViewById(R.id.textAccuracy);
-                            txtLatitude.setText(String.valueOf(location.getLatitude()));
-                            txtLongitude.setText(String.valueOf(location.getLongitude()));
-                            txtAccuracy.setText(String.valueOf(location.getAccuracy()));
-                        }
 
-                        public void onStatusChanged(String provider, int status, Bundle extras) {
-                        }
-
-                        public void onProviderEnabled(String provider) {
-                        }
-
-                        public void onProviderDisabled(String provider) {
-                        }
-                    };
-                    locationManager.requestLocationUpdates(
-                            LocationManager.GPS_PROVIDER, 0, 0, gpsListener);
-
-                }
-                catch (Exception e){
-                    Toast.makeText(getBaseContext(),"Error,Location not available",
-                            Toast.LENGTH_LONG).show();
-                }
             }
         });
     }
@@ -87,4 +63,39 @@ public class ContactMapActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    //Listing 7.5 Code for startLocationUpdate
+    private void startLocationUpdates() {
+        if (Build.VERSION.SDK_INT >= 23 && ContextCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getBaseContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return ;
+            //Listing 7.3 code moved here
+            try {
+                locationManager = (LocationManager) getBaseContext().getSystemService(Context.LOCATION_SERVICE);
+                gpsListener = new LocationListener() {
+                    public void onLocationChanged(Location location) {
+                        TextView txtLatitude = (TextView) findViewById(R.id.textLatitude);
+                        TextView txtLongitude = (TextView) findViewById(R.id.textLongitude);
+                        TextView txtAccuracy = (TextView) findViewById(R.id.textAccuracy);
+                        txtLatitude.setText(String.valueOf(location.getLatitude()));
+                        txtLongitude.setText(String.valueOf(location.getLongitude()));
+                        txtAccuracy.setText(String.valueOf(location.getAccuracy()));
+                    }
+
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
+                    }
+
+                    public void onProviderEnabled(String provider) {
+                    }
+
+                    public void onProviderDisabled(String provider) {
+                    }
+                };
+                locationManager.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER, 0, 0, gpsListener);
+
+            }
+            catch (Exception e){
+                Toast.makeText(getBaseContext(),"Error,Location not available",
+                        Toast.LENGTH_LONG).show();
+            }
 }
